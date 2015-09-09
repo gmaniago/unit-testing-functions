@@ -9,8 +9,17 @@
  * If the input is invalid throw an 'Invalid Input' exception.
  */
 function checkData(inputString) {
-	// your code goes here
-}
+	if(typeof inputString !== 'string') {
+			throw 'Invalid Input';
+		}
+		if (inputString.length === 3){
+			return  true;
+		}
+		else {
+			return  false;
+		}
+	}
+
 
 /*
  * PROBLEM `concatenateArrays`: (normal)
@@ -20,8 +29,16 @@ function checkData(inputString) {
  * If the input is invalid throw an 'Invalid Input' exception.
  */
 function concatenateArrays(a, b) {
-	// your code goes here
+	var result = a.concat(b);
+	return result;
 }
+
+var a = [1,2,3]
+var b =[1,2,3]
+
+concatenateArrays(a, b);
+[ 1, 2, 3, 1, 2, 3 ]
+
 
 /*
  * PROBLEM `fixProperNoun`: (normal)
@@ -33,8 +50,16 @@ function concatenateArrays(a, b) {
  * If the input is invalid throw an 'Invalid Input' exception.
  */
 function fixProperNoun(noun) {
-	// your code goes here
+ if(typeof noun !== 'string' || noun.length === 0) {
+        throw 'Invalid Input';
+    }
+
+    noun = noun.toLowerCase();
+    var properCase = noun.charAt(0).toUpperCase();
+    properCase += noun.substring(1);
+    return fixedCase;
 }
+
 
 /*
  * PROBLEM `sortLetters`: (normal)
@@ -44,8 +69,15 @@ function fixProperNoun(noun) {
  * If the input is invalid throw an 'Invalid Input' exception.
  */
 function sortLetters(inputString) {
-	// your code goes here
+	if( typeof inputString !== 'string'){
+		throw 'Invalid Input';
+	}
+
+	var sorted = inputString.split('').sort().join('');
+	return sorted;
 }
+	var letters = 'bdacge';
+	sortLetters(letters);
 
 /*
  * PROBLEM `absVal`: (normal)
@@ -54,10 +86,28 @@ function sortLetters(inputString) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
+
 function absVal(integer) {
-	// your code goes here
+	if (isNaN(integer) || integer === [] || integer === '' || integer % 1 !== 0) {
+		throw 'Invalid Input';
+	}
+	if (integer > 0) {
+		return integer;
+	}
+	else if (integer < 0) {
+		return (integer+(integer*(-2)));
+	}
+	else {
+		return 0;
+		}
 }
 
+var positive = absVal (10)
+console.log(positive);
+var negative = absVal (-10)
+console.log(negative);
+var none = absVal (0)
+console.log(none);
 /*
  * PROBLEM `myMin`: (normal)
  * Write a function called `myMin` that takes two integers and returns the
