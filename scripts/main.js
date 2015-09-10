@@ -1,5 +1,5 @@
 'use strict';
-
+var _ = require('lodash');
 /*
  * PROBLEM `checkData`: (normal)
  * Write a function that takes a string and checks to make sure that the string
@@ -115,6 +115,9 @@ console.log(none);
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
+ function myMin(x,y) {
+	return Math.min(x,y);
+ }
 
 /*
  * PROBLEM `myMax`: (normal) - Actual Interview Question
@@ -122,10 +125,20 @@ console.log(none);
  * the largest.
  *
  * If the input is invalid throw an 'Invalid Input' exception.
+
  *
  * Insane mode: do this without using a for loop.
  */
-
+function myMax (a) {
+ 	checkArraysAndElements(a);
+ 	var max=0;
+ 	for (var i = 0; i<a.length; i++) {
+ 		if (a[i]>max) {
+ 			var max = a[i];
+ 		}
+ 	}
+ 	return max;
+ }
 /*
  * PROBLEM `getMonth`: (normal)
  * Write a function called `getMonth` that maps a given integer to a month.
@@ -137,6 +150,23 @@ console.log(none);
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
+function getMonth(num){
+	var month = [
+	'January', 
+	'February',
+	'March', 
+	'April', 
+	'May', 
+	'June',
+	'July',	 
+	'August',
+	'September',
+	'October',
+	'November',
+	'December'
+	]; 
+	return month[num];
+}
 
 /*
  * PROBLEM `randomElement`: (normal)
@@ -150,6 +180,42 @@ console.log(none);
  * student names and returns an array of randomly selected pairs of students
  * (array of arrays).
  */
+
+ function studentPairs(studentNames) {
+ 	if(!_.isArray(studentNames)) {
+ 		throw 'Invalid Input';
+ 	}
+ 	for (var studentNumber = 0; studentNumber < max; studentNumber++){
+ 		var currentStudent = studentNames[studentNumber];
+ 		if(!_.isString(currentStudent)) {
+ 			throw 'Invalid input: stuent must me a string'
+ 		}
+ 	}
+ 	var pairs =[];
+
+	for (var pairNum = 0; pairNum < Math.floor(studentNames.lenght/2); pairNum++){
+		var studentNumber1 = getRandomInt(0, studentNames.lenght-1);
+		var studentName1= studentNames.splice(studentNumber1, 1);
+
+		var studentNumber2 = getRandomInt(0, studentNames.lenght-1);
+		var studentName2= studentNames.splice(studentNumber2, 1);
+
+		// pairs.push([
+		// 	studentName1[0]
+		// 	studentName2[0]
+		// 	]);
+
+		pairs.push(studentName1.concat(studentName2));
+	}
+
+	var pairNumber = getRandomInt(0, pairs.lenght-1);
+	var studentName2= studentNames.splice(studentNumber2, 1);
+
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+	return pairs;
+}
 
 /*
  * PROBLEM `sumSquares`: (normal)

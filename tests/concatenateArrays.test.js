@@ -18,6 +18,12 @@ describe('concatenateArrays', function() {
 	it('should throw an exception if the input is an array', function() {
 		expect(function() { functions.concatenateArrays (['a']) }).to.throw ('Invalid Input');
 	})
+	it('should return a new array, joining arrays a and b', function(){
+		expect(functions.concatenateArrays(['a','b','c'],['d','e','f','g'])).to.eql(['a','b','c','d','e','f','g']);
+	});
+	it('should throw an exception if the input is invalid',function(){
+		expect(function(){functions.concatenateArrays(['a'])}).to.throw('invalid input');
+	});
 	
 })
 
