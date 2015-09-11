@@ -49,17 +49,10 @@ concatenateArrays(a, b);
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-function fixProperNoun(noun) {
- if(typeof noun !== 'string' || noun.length === 0) {
-        throw 'Invalid Input';
-    }
 
-    noun = noun.toLowerCase();
-    var properCase = noun.charAt(0).toUpperCase();
-    properCase += noun.substring(1);
-    return fixedCase;
+function fixProperNoun(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
 
 /*
  * PROBLEM `sortLetters`: (normal)
@@ -88,26 +81,15 @@ function sortLetters(inputString) {
  */
 
 function absVal(integer) {
-	if (isNaN(integer) || integer === [] || integer === '' || integer % 1 !== 0) {
+	if (typeof integer!=='number'){
 		throw 'Invalid Input';
 	}
-	if (integer > 0) {
-		return integer;
+	if (integer<0){
+		integer=integer*(-1);
 	}
-	else if (integer < 0) {
-		return (integer+(integer*(-2)));
-	}
-	else {
-		return 0;
-		}
+	return integer;
 }
 
-var positive = absVal (10)
-console.log(positive);
-var negative = absVal (-10)
-console.log(negative);
-var none = absVal (0)
-console.log(none);
 /*
  * PROBLEM `myMin`: (normal)
  * Write a function called `myMin` that takes two integers and returns the
@@ -129,16 +111,11 @@ console.log(none);
  *
  * Insane mode: do this without using a for loop.
  */
-function myMax (a) {
- 	checkArraysAndElements(a);
- 	var max=0;
- 	for (var i = 0; i<a.length; i++) {
- 		if (a[i]>max) {
- 			var max = a[i];
- 		}
- 	}
- 	return max;
+
+function myMin(x,y) {
+	return Math.max(x,y);
  }
+
 /*
  * PROBLEM `getMonth`: (normal)
  * Write a function called `getMonth` that maps a given integer to a month.
@@ -150,29 +127,36 @@ function myMax (a) {
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
-function getMonth(num){
-	var month = [
-	'January', 
-	'February',
-	'March', 
-	'April', 
-	'May', 
-	'June',
-	'July',	 
-	'August',
-	'September',
-	'October',
-	'November',
-	'December'
-	]; 
-	return month[num];
-}
+ function getMonth(monthTonumber) {
+ 	var months= [
+	 	'January', 
+		'February', 
+		'March', 
+		'April', 
+		'May', 
+		'June', 
+		'July', 
+		'August', 
+		'September', 
+		'October', 
+		'November', 
+		'December'
+		];
+ 	return months[monthTonumber-1];
+ }
 
 /*
  * PROBLEM `randomElement`: (normal)
  * Create a function called `randomElement` that takes an array of values and
  * returns one randomly selected value from that array.
  */
+function randomElement(values){
+	if(Array.isArray(values) !== true){
+		throw 'Invalid Input'
+	}
+	var item = values[Math.floor(Math.random()*values.length)];
+	return item;
+}
 
 /*
  * PROBLEM `studentPairs`: (normal)
@@ -182,38 +166,44 @@ function getMonth(num){
  */
 
  function studentPairs(studentNames) {
- 	if(!_.isArray(studentNames)) {
- 		throw 'Invalid Input';
- 	}
- 	for (var studentNumber = 0; studentNumber < max; studentNumber++){
- 		var currentStudent = studentNames[studentNumber];
- 		if(!_.isString(currentStudent)) {
- 			throw 'Invalid input: stuent must me a string'
- 		}
- 	}
- 	var pairs =[];
+	if(!_.isArray(studentNames)) {
+		throw 'Invalid input';
+	}
 
-	for (var pairNum = 0; pairNum < Math.floor(studentNames.lenght/2); pairNum++){
-		var studentNumber1 = getRandomInt(0, studentNames.lenght-1);
-		var studentName1= studentNames.splice(studentNumber1, 1);
+	for(var studentNumber = 0; studentNumber < studentNames.length; studentNumber++) {
+		var currentStudent = studentNames[studentNumber];
+		if(!_.isString(currentStudent)) {
+			throw 'Invalid input: student must be a string';
+		}
+	}
 
-		var studentNumber2 = getRandomInt(0, studentNames.lenght-1);
-		var studentName2= studentNames.splice(studentNumber2, 1);
+	var pairs = [];
+
+	var max = Math.floor(studentNames.length/2);
+
+	for(var pairNum = 0; pairNum < max; pairNum++) {
+		var studentNumber1 = getRandomInt(0, studentNames.length-1);
+		var studentName1 = studentNames.splice(studentNumber1, 1);
+
+		var studentNumber2 = getRandomInt(0, studentNames.length-1);
+		var studentName2 = studentNames.splice(studentNumber2, 1);
 
 		// pairs.push([
-		// 	studentName1[0]
+		// 	studentName1[0],
 		// 	studentName2[0]
-		// 	]);
-
+		// ]);
 		pairs.push(studentName1.concat(studentName2));
 	}
 
-	var pairNumber = getRandomInt(0, pairs.lenght-1);
-	var studentName2= studentNames.splice(studentNumber2, 1);
+	if(studentNames.length > 0) {
+		var pairNumber = getRandomInt(0, pairs.length-1);
+		pairs[pairNumber].push(studentNames[0]);
+	}
 
 	function getRandomInt(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
+
 	return pairs;
 }
 
@@ -225,6 +215,20 @@ function getMonth(num){
  * If the input is invalid throw an 'Invalid Input' exception.
  */
 
+ function sumSquares(input) {
+
+	if (typeof input !== 'number' || input % 1 !==0 || input === '') {
+		throw 'Invalid Input';
+	}
+	var sum = 0;
+
+	for (var i = 0; i <= input; i++) {
+		var square = (i * i);
+		var sum = square + sum;
+	}
+	return sum;
+}
+
 /* 
  * PROBLEM `findMaxDiff`: (normal)
  * Given an array of integers, write a function called `findMaxDiff` that finds
@@ -232,6 +236,20 @@ function getMonth(num){
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
+ function findMaxDiff(nums){ 
+	 var max = 0; 
+	 var diff; 
+	 var maxdiff = 0;
+	for(var i=1; i<nums.length; i++) {
+	    diff = Math.abs(nums[i] - nums[i-1]);
+	    if(diff = max) {
+	        max > diff;
+	        maxdiff = i-1;
+	    }
+	}
+
+	return max;
+}
 
 /*
  * PROBLEM `insertDashes`: (normal)
@@ -241,11 +259,24 @@ function getMonth(num){
  *
  * If the input is invalid throw an 'Invalid Input' exception.
  */
+function insertDashes(num) { 
+    var text = num.toString().split('');
+
+    var dash = text.length;
+    var final = [];
+    for (var i = 0; i < text; i++){
+        final.push(text[i]);
+        if (text[i]%2 != 0){
+            if (i+1 < dash && text[i+1]%2 != 0) {
+                final.push('-')
+            }
+        }
+    }  
+  return final.join('');
+}
 
 /*
- * PROBLEM `mySubstring`: (normal)
- * Implement a function called `mySubstring` that can output the substring of
- * the given string within specified bounds.
+
  *
  * For example: mySubstring('abcde', 2, 3) === 'cd'
  *
